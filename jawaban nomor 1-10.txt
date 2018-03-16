@@ -1,0 +1,11 @@
+1. RelativeLayout
+2. AndroidManifest.xml
+3. A.onCreate() - A.onStart() - A.onResume() - A.onPause() - B.onCreate() - B.onStart() - B.onResume() - A.onDestroy()
+4. private
+5. local variable: variable yang dideklarasikan dalam sebuah method
+   instance variable: variable yang dideklarasikan di dalam class tetapi di luar sebuah method
+6. git clone 
+7. git config --global user.email
+8. toast dimunculkan dengan tulisan finishing()
+9. permission digunakan dalam tag application
+10. memunculkan log dengan TAG "Binar" dan message "habis dibagi tiga"
