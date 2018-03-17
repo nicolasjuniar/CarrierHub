@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_karyawan"
+            android:icon="@drawable/ic_person_24dp"
+            android:title="Karyawan" />
+        <item
+            android:id="@+id/nav_buku"
+            android:icon="@drawable/ic_book_24dp"
+            android:title="Buku" />
+        <item
+            android:id="@+id/nav_keluar"
+            android:icon="@drawable/ic_arrow_back_24dp"
+            android:title="Keluar" />
+    </group>
+</menu>
