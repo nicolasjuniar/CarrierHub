@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import com.juniar.carrierhub.Constant.CommonString.Companion.ADMIN
 import com.juniar.carrierhub.Constant.CommonString.Companion.INITIALIZE
+import com.juniar.carrierhub.Constant.CommonString.Companion.KARYAWAN
 import com.juniar.carrierhub.Constant.CommonString.Companion.ROLE
 import com.juniar.carrierhub.MainApp
 import com.juniar.carrierhub.R
@@ -31,23 +33,18 @@ class SplashScreenActivity : AppCompatActivity() {
             initializeDb()
         }
         Handler().postDelayed({
-            loadPreferences()
+            if (sharedPreferenceUtil.getString(ROLE).isNotEmpty()) {
+                startActivity(Intent(this@SplashScreenActivity, HomeActivity::class.java))
+            } else {
+                startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
+            }
             finish()
         }, 2000)
     }
 
     fun initializeDb() {
-        daoSession.insert(UserEntity(null, "admin", "123456", "admin"))
-    }
-
-    fun loadPreferences() {
-        val role = sharedPreferenceUtil.getString(ROLE)
-        if (role.isNotEmpty()) {
-            val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
-            intent.putExtra(ROLE, role)
-            startActivity(intent)
-        } else {
-            startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
-        }
+        daoSession.insert(UserEntity(null, "admin", "123456", ADMIN))
+        daoSession.insert(UserEntity(null, "nico", "123456", KARYAWAN))
+        sharedPreferenceUtil.setBoolean(INITIALIZE,true)
     }
 }

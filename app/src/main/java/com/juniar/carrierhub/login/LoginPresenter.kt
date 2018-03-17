@@ -2,7 +2,6 @@ package com.juniar.carrierhub.login
 
 import com.juniar.carrierhub.Constant.CommonString.Companion.ROLE
 import com.juniar.carrierhub.entity.DaoSession
-import com.juniar.carrierhub.model.LoginModel
 import com.juniar.carrierhub.utils.SharedPreferenceUtil
 
 /**
@@ -12,14 +11,13 @@ class LoginPresenter(val daoSession: DaoSession, val view: LoginView, val shared
 
     fun login(username: String, password: String) {
         val users = daoSession.userEntityDao.loadAll()
-        var model = LoginModel()
+        var check=false
         users.forEach {
             if (it.username.equals(username, true) && it.password == password) {
-                model.success = true
-                model.role = it.role
+                check = true
                 sharedPreferenceUtil.setString(ROLE, it.role)
             }
         }
-        view.onGetUser(model)
+        view.onSuccessLogin(check)
     }
 }
