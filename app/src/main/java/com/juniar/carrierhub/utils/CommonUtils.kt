@@ -2,11 +2,15 @@ package com.juniar.carrierhub.utils
 
 import android.content.Context
 import android.content.DialogInterface
+import android.support.annotation.ColorRes
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.juniar.carrierhub.Constant.CommonString.Companion.EMPTY_STRING
+import com.juniar.carrierhub.R
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import java.text.DateFormatSymbols
@@ -59,4 +63,13 @@ fun changeDateFormat(input: String,oldPattern:String,newPattern:String): String 
 
 fun getMonth(month: Int): String {
     return DateFormatSymbols().months[month]
+}
+
+fun Context.getColorCompat(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)
+
+fun Button.setAvailable(enable: Boolean, context: Context) {
+    kotlin.with(this) {
+        isEnabled = enable
+        setBackgroundResource(if (enable) R.color.colorPrimary else R.color.coloPrimaryLight)
+    }
 }

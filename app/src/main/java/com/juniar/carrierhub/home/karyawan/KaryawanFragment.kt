@@ -68,7 +68,7 @@ class KaryawanFragment : Fragment(), KaryawanView {
                 dialog.setTargetFragment(this, 1)
                 dialog.show(activity.supportFragmentManager, KARYAWAN)
             } else {
-                activity.showShortToast("Karyawan yang dimiliki maksmal 5")
+                activity.showShortToast(getString(R.string.maximal_karyawan_alert))
             }
         }
     }

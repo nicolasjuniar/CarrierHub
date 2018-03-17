@@ -6,12 +6,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.google.gson.Gson
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.juniar.carrierhub.R
 import com.juniar.carrierhub.entity.BarangEntity
 import com.juniar.carrierhub.home.karyawan.EditKaryawanActivity.Companion.ACTION
 import com.juniar.carrierhub.home.karyawan.EditKaryawanActivity.Companion.DELETE
 import com.juniar.carrierhub.home.karyawan.EditKaryawanActivity.Companion.UPDATE
 import com.juniar.carrierhub.utils.*
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Function4
 import kotlinx.android.synthetic.main.activity_pengelolaan_barang.*
 import java.util.*
 
@@ -38,6 +42,25 @@ class PengelolaanBarangActivity : AppCompatActivity() {
             et_tanggal.setText(changeDateFormat("$day ${getMonth(month)} $year", "d MMMM yyyy", "d MMMM yyyy"))
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
 
+
+        Observable.combineLatest(
+                RxTextView.textChanges(et_nama)
+                        .map { it.isNotEmpty() },
+                RxTextView.textChanges(et_pemasok)
+                        .map { it.isNotEmpty() },
+                RxTextView.textChanges(et_stok)
+                        .map { it.isNotEmpty() },
+                RxTextView.textChanges(et_tanggal)
+                        .map { it.isNotEmpty() },
+                Function4 { nama: Boolean, pemasok: Boolean, stok: Boolean, tanggal: Boolean ->
+                    nama && pemasok && stok && tanggal
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    btn_add.setAvailable(it, this@PengelolaanBarangActivity)
+                    btn_update.setAvailable(it, this@PengelolaanBarangActivity)
+                }
+
         et_tanggal.setOnClickListener {
             datePicker.show()
         }
@@ -52,7 +75,7 @@ class PengelolaanBarangActivity : AppCompatActivity() {
             et_tanggal.setText(barang.tanggal)
 
             btn_update.setOnClickListener {
-                buildAlertDialog("Update Barang", "Apakah anda yakin mengupdate barang ${barang.nama}?", "ya", "tidak", {
+                buildAlertDialog(getString(R.string.dialog_update_barang_title), getString(R.string.dialog_update_barang_detail, barang.nama), getString(R.string.dialog_ya), getString(R.string.dialog_tidak), {
                     barangIntent.putExtra(ACTION, UPDATE)
                     with(barang)
                     {
@@ -66,7 +89,7 @@ class PengelolaanBarangActivity : AppCompatActivity() {
             }
 
             btn_delete.setOnClickListener {
-                buildAlertDialog("Hapus Barang", "Apakah anda yakin menghapus barang ${barang.nama}?", "ya", "tidak", {
+                buildAlertDialog(getString(R.string.dialog_delete_barang_title), getString(R.string.dialog_delete_barang_detail, barang.nama), getString(R.string.dialog_ya), getString(R.string.dialog_tidak), {
                     barangIntent.putExtra(ACTION, DELETE)
                     editBarang(barang)
                 }).show()

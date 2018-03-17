@@ -5,14 +5,15 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.juniar.carrierhub.MainApp
 import com.juniar.carrierhub.R
 import com.juniar.carrierhub.entity.DaoSession
 import com.juniar.carrierhub.home.HomeActivity
-import com.juniar.carrierhub.utils.SharedPreferenceUtil
-import com.juniar.carrierhub.utils.buildAlertDialog
-import com.juniar.carrierhub.utils.showShortToast
-import com.juniar.carrierhub.utils.textToString
+import com.juniar.carrierhub.utils.*
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
@@ -30,6 +31,18 @@ class LoginActivity : AppCompatActivity(), LoginView {
         daoSession = (application as MainApp).daoSession
         sharedPreferenceUtil = SharedPreferenceUtil(this@LoginActivity)
         presenter = LoginPresenter(daoSession, this, sharedPreferenceUtil)
+
+        Observable.combineLatest(
+                RxTextView.textChanges(et_username)
+                        .map { it.isNotEmpty() },
+                RxTextView.textChanges(et_password)
+                        .map { it.isNotEmpty() },
+                BiFunction { username: Boolean, password: Boolean ->
+                    username && password
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { btn_login.setAvailable(it, this@LoginActivity) }
+
         btn_login.setOnClickListener {
             presenter.login(et_username.textToString(), et_password.textToString())
         }
@@ -43,7 +56,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId){
             R.id.action_info->{
-                buildAlertDialog("Info","Aplikasi merupakan aplikasi pengelolaan barang, silahkan login dengan username nico(karyawan) atau admin(admin) dengan password 123456","ok").show()
+                buildAlertDialog(getString(R.string.dialog_info_title),getString(R.string.dialog_info_detail),getString(R.string.dialog_ok)).show()
                 true
             }
 

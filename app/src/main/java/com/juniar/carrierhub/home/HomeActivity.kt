@@ -2,6 +2,7 @@ package com.juniar.carrierhub.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -20,6 +21,7 @@ import com.juniar.carrierhub.home.karyawan.KaryawanFragment
 import com.juniar.carrierhub.login.LoginActivity
 import com.juniar.carrierhub.utils.SharedPreferenceUtil
 import com.juniar.carrierhub.utils.buildAlertDialog
+import com.juniar.carrierhub.utils.showShortToast
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.nav_header_home.view.*
@@ -28,6 +30,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var sharedPreferenceUtil: SharedPreferenceUtil
     lateinit var fragmentManager: FragmentManager
+    var exit=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +45,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val role = sharedPreferenceUtil.getString(ROLE)
         when (role) {
             ADMIN -> {
-                supportActionBar?.title = "Kelola Karyawan"
+                supportActionBar?.title = getString(R.string.kelola_karyawan)
                 navBarang.isVisible = false
                 navKaryawan.isChecked = true
                 fragmentManager.beginTransaction().replace(R.id.container_body, KaryawanFragment.newInstance()).commit()
             }
             KARYAWAN -> {
-                supportActionBar?.title = "Kelola Barang"
+                supportActionBar?.title = getString(R.string.kelola_barang)
                 navKaryawan.isVisible = false
                 navBarang.isChecked = true
                 fragmentManager.beginTransaction().replace(R.id.container_body, BarangFragment()).commit()
@@ -66,7 +69,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            if (exit) {
+                finish()
+            } else {
+                this.showShortToast(getString(R.string.exit_text))
+                exit = true
+                Handler().postDelayed({ exit = false }, (3 * 1000).toLong())
+            }
         }
     }
 
@@ -80,7 +89,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 fragment = BarangFragment.newInstance()
             }
             R.id.nav_keluar -> {
-                buildAlertDialog("Keluar", "Apakah anda ingin keluar?", "ya", "tidak", {
+                buildAlertDialog(getString(R.string.dialog_keluar_title), getString(R.string.dialog_keluar_detail), getString(R.string.dialog_ya), getString(R.string.dialog_tidak), {
                     sharedPreferenceUtil.setString(ROLE, EMPTY_STRING)
                     startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
                     finish()
