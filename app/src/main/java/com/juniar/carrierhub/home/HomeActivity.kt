@@ -13,39 +13,45 @@ import com.juniar.carrierhub.Constant.CommonString.Companion.ADMIN
 import com.juniar.carrierhub.Constant.CommonString.Companion.EMPTY_STRING
 import com.juniar.carrierhub.Constant.CommonString.Companion.KARYAWAN
 import com.juniar.carrierhub.Constant.CommonString.Companion.ROLE
+import com.juniar.carrierhub.Constant.CommonString.Companion.USERNAME
 import com.juniar.carrierhub.R
+import com.juniar.carrierhub.home.buku.BarangFragment
 import com.juniar.carrierhub.home.karyawan.KaryawanFragment
 import com.juniar.carrierhub.login.LoginActivity
 import com.juniar.carrierhub.utils.SharedPreferenceUtil
 import com.juniar.carrierhub.utils.buildAlertDialog
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
+import kotlinx.android.synthetic.main.nav_header_home.view.*
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var sharedPreferenceUtil: SharedPreferenceUtil
-    lateinit var fragmentManager:FragmentManager
+    lateinit var fragmentManager: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
-        fragmentManager=supportFragmentManager
+        fragmentManager = supportFragmentManager
         sharedPreferenceUtil = SharedPreferenceUtil(this@HomeActivity)
-        val nav_buku = nav_view.menu.findItem(R.id.nav_buku)
-        val nav_karyawan = nav_view.menu.findItem(R.id.nav_karyawan)
+        val navView = nav_view.getHeaderView(0)
+        navView.tv_username.text=sharedPreferenceUtil.getString(USERNAME)
+        val navBarang = nav_view.menu.findItem(R.id.nav_barang)
+        val navKaryawan = nav_view.menu.findItem(R.id.nav_karyawan)
         val role = sharedPreferenceUtil.getString(ROLE)
         when (role) {
             ADMIN -> {
-                supportActionBar?.title="Kelola Karyawan"
-                nav_buku.isVisible = false
-                nav_karyawan.isChecked = true
-                fragmentManager.beginTransaction().replace(R.id.container_body,KaryawanFragment.newInstance()).commit()
+                supportActionBar?.title = "Kelola Karyawan"
+                navBarang.isVisible = false
+                navKaryawan.isChecked = true
+                fragmentManager.beginTransaction().replace(R.id.container_body, KaryawanFragment.newInstance()).commit()
             }
             KARYAWAN -> {
-                supportActionBar?.title="Kelola Buku"
-                nav_karyawan.isVisible = false
-                nav_buku.isChecked = true
+                supportActionBar?.title = "Kelola Barang"
+                navKaryawan.isVisible = false
+                navBarang.isChecked = true
+                fragmentManager.beginTransaction().replace(R.id.container_body, BarangFragment()).commit()
             }
         }
         val toggle = ActionBarDrawerToggle(
@@ -70,12 +76,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_karyawan -> {
                 fragment = KaryawanFragment.newInstance()
             }
-            R.id.nav_buku -> {
-
+            R.id.nav_barang -> {
+                fragment = BarangFragment.newInstance()
             }
             R.id.nav_keluar -> {
                 buildAlertDialog("Keluar", "Apakah anda ingin keluar?", "ya", "tidak", {
-                    sharedPreferenceUtil.setString(ROLE,EMPTY_STRING)
+                    sharedPreferenceUtil.setString(ROLE, EMPTY_STRING)
                     startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
                     finish()
                 }).show()

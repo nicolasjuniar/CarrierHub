@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item?.itemId){
             R.id.action_info->{
-                buildAlertDialog("Info","Aplikasi merupakan aplikasi pengelolaan buku, silahkan login dengan username nico(karyawan) atau admin(admin) dengan password 123456","ok").show()
+                buildAlertDialog("Info","Aplikasi merupakan aplikasi pengelolaan barang, silahkan login dengan username nico(karyawan) atau admin(admin) dengan password 123456","ok").show()
                 true
             }
 

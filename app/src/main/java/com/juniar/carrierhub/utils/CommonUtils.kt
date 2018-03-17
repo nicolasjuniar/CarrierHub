@@ -7,6 +7,10 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.juniar.carrierhub.Constant.CommonString.Companion.EMPTY_STRING
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
+import java.text.DateFormatSymbols
+import java.util.*
 
 /**
  * Created by Jarvis on 17/03/2018.
@@ -43,4 +47,16 @@ fun Context.buildAlertDialog(title: String, message: String = EMPTY_STRING, yesB
     }
 
     return builder.create()
+}
+
+fun changeDateFormat(input: String,oldPattern:String,newPattern:String): String {
+    val oldFormat = DateTimeFormat.forPattern(oldPattern)
+    val oldDateTime = oldFormat.parseDateTime(input)
+    val newFormat = DateTimeFormat.forPattern(newPattern)
+    val newDateTime = DateTime.parse(newFormat.print(oldDateTime), newFormat)
+    return newDateTime.toString(newPattern, Locale("id", "ID", "ID"))
+}
+
+fun getMonth(month: Int): String {
+    return DateFormatSymbols().months[month]
 }

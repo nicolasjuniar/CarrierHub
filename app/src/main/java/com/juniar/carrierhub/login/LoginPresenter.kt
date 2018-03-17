@@ -1,6 +1,7 @@
 package com.juniar.carrierhub.login
 
 import com.juniar.carrierhub.Constant.CommonString.Companion.ROLE
+import com.juniar.carrierhub.Constant.CommonString.Companion.USERNAME
 import com.juniar.carrierhub.entity.DaoSession
 import com.juniar.carrierhub.utils.SharedPreferenceUtil
 
@@ -16,6 +17,7 @@ class LoginPresenter(val daoSession: DaoSession, val view: LoginView, val shared
             if (it.username.equals(username, true) && it.password == password) {
                 check = true
                 sharedPreferenceUtil.setString(ROLE, it.role)
+                sharedPreferenceUtil.setString(USERNAME,it.username)
             }
         }
         view.onSuccessLogin(check)

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/field_nama"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/et_nama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="nama barang"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/field_pemasok"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/field_nama">
+
+        <EditText
+            android:id="@+id/et_pemasok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="pemasok"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/field_stok"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/field_pemasok">
+
+        <EditText
+            android:id="@+id/et_stok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="stok"
+            android:inputType="number"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/field_tanggal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/field_stok">
+
+        <EditText
+            android:id="@+id/et_tanggal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:hint="tanggal"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
+        android:text="add"
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/field_tanggal" />
+
+    <Button
+        android:id="@+id/btn_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
+        android:text="update"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_delete"
+        app:layout_constraintTop_toBottomOf="@id/field_tanggal" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
+        android:text="delete"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        app:layout_constraintLeft_toRightOf="@id/btn_update"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/field_tanggal" />
+
+</android.support.constraint.ConstraintLayout>

@@ -9,9 +9,9 @@
             android:icon="@drawable/ic_person_24dp"
             android:title="Karyawan" />
         <item
-            android:id="@+id/nav_buku"
+            android:id="@+id/nav_barang"
             android:icon="@drawable/ic_book_24dp"
-            android:title="Buku" />
+            android:title="Barang" />
         <item
             android:id="@+id/nav_keluar"
             android:icon="@drawable/ic_arrow_back_24dp"

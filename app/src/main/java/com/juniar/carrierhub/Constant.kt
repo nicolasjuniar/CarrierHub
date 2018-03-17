@@ -12,6 +12,7 @@ class Constant {
             val DB_NAME = "example_db.db"
             val INITIALIZE="initialize"
             val ROLE="role"
+            val USERNAME="username"
             val ADMIN="admin"
             val KARYAWAN="karyawan"
         }

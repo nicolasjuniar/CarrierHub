@@ -41,7 +41,7 @@ class EditKaryawanActivity : AppCompatActivity() {
                 intent.putExtra(KARYAWAN, Gson().toJson(karyawan))
                 setResult(Activity.RESULT_OK, intent)
                 finish()
-            })
+            }).show()
         }
 
         btn_delete.setOnClickListener {
@@ -51,7 +51,7 @@ class EditKaryawanActivity : AppCompatActivity() {
                 intent.putExtra(KARYAWAN, Gson().toJson(karyawan))
                 setResult(Activity.RESULT_OK, intent)
                 finish()
-            })
+            }).show()
         }
     }
 }

@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".home.karyawan.EditKaryawanActivity"/>
+        <activity android:name=".home.buku.PengelolaanBarangActivity"/>
     </application>
 
 </manifest>
